@@ -3,4 +3,4 @@ __pycache__/
 *.log
 chromedriver.exe
 linkedin_cookies.pkl
-ECHO is on.
+
