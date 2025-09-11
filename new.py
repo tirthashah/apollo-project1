@@ -1,126 +1,126 @@
 
 
 
-#follow button click code
+# follow button click code
 
-# import time
-# import csv
-# from selenium import webdriver
-# from selenium.webdriver.chrome.service import Service
-# from selenium.webdriver.chrome.options import Options
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.common.action_chains import ActionChains
-# from webdriver_manager.chrome import ChromeDriverManager
+import time
+import csv
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from webdriver_manager.chrome import ChromeDriverManager
 
-# # ✅ CSV file path
-# csv_file_path = r"C:/Users/X1/Downloads/one_data.csv"
+# ✅ CSV file path
+csv_file_path = r"C:/Users/X1/Downloads/one_data.csv"
 
-# # LinkedIn credentials
-# linkedin_email = "brijeshshah19@gmail.com"
-# linkedin_password = "NextGen@1"
+# LinkedIn credentials
+linkedin_email = "brijeshshah19@gmail.com"
+linkedin_password = "NextGen@1"
 
-# # Chrome options
-# user_data_dir = r"C:\SeleniumProfile"
-# options = Options()
-# options.add_argument(f"--user-data-dir={user_data_dir}")
-# options.add_argument("--profile-directory=Default")
-# options.add_argument("--no-sandbox")
-# options.add_argument("--disable-dev-shm-usage")
-# options.add_argument("--disable-gpu")
-# options.add_argument("--enable-unsafe-swiftshader")  # added for your GPU warning
+# Chrome options
+user_data_dir = r"C:\SeleniumProfile"
+options = Options()
+options.add_argument(f"--user-data-dir={user_data_dir}")
+options.add_argument("--profile-directory=Default")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-gpu")
+options.add_argument("--enable-unsafe-swiftshader")  # added for your GPU warning
 
-# # Initialize WebDriver
-# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-# wait = WebDriverWait(driver, 20)
+# Initialize WebDriver
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+wait = WebDriverWait(driver, 20)
 
-# # -----------------------------
-# # 1️⃣ Login to LinkedIn
-# # -----------------------------
-# driver.get("https://www.linkedin.com/login")
-# try:
-#     email_input = wait.until(EC.element_to_be_clickable((By.ID, "username")))
-#     email_input.send_keys(linkedin_email)
+# -----------------------------
+# 1️⃣ Login to LinkedIn
+# -----------------------------
+driver.get("https://www.linkedin.com/login")
+try:
+    email_input = wait.until(EC.element_to_be_clickable((By.ID, "username")))
+    email_input.send_keys(linkedin_email)
 
-#     password_input = wait.until(EC.element_to_be_clickable((By.ID, "password")))
-#     password_input.send_keys(linkedin_password)
+    password_input = wait.until(EC.element_to_be_clickable((By.ID, "password")))
+    password_input.send_keys(linkedin_password)
 
-#     login_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']")))
-#     login_btn.click()
+    login_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']")))
+    login_btn.click()
 
-#     # Wait until feed/home loads
-#     wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-#     print("✅ Login successful!")
-# except Exception as e:
-#     print(f"❌ Login error: {e}")
-#     time.sleep(5)
+    # Wait until feed/home loads
+    wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+    print("✅ Login successful!")
+except Exception as e:
+    print(f"❌ Login error: {e}")
+    time.sleep(5)
 
-# # -----------------------------
-# # 2️⃣ Process CSV LinkedIn URLs
-# # -----------------------------
-# with open(csv_file_path, mode='r', encoding='utf-8') as file:
-#     csv_reader = csv.DictReader(file)
-#     for row in csv_reader:
-#         linkedin_url = row.get('Person Linkedin Url')
-#         if not linkedin_url:
-#             print("⚠️ No LinkedIn URL found in row.")
-#             continue
+# -----------------------------
+# 2️⃣ Process CSV LinkedIn URLs
+# -----------------------------
+with open(csv_file_path, mode='r', encoding='utf-8') as file:
+    csv_reader = csv.DictReader(file)
+    for row in csv_reader:
+        linkedin_url = row.get('Person Linkedin Url')
+        if not linkedin_url:
+            print("⚠️ No LinkedIn URL found in row.")
+            continue
 
-#         print(f"\n➡️ Processing profile: {linkedin_url}")
-#         try:
-#             # Step 1: Go to the profile
-#             driver.get(linkedin_url)
-#             wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-#             time.sleep(5)
+        print(f"\n➡️ Processing profile: {linkedin_url}")
+        try:
+            # Step 1: Go to the profile
+            driver.get(linkedin_url)
+            wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+            time.sleep(5)
 
-#             # Step 2: Locate "Follow" button dynamically by text
-#             follow_button_xpath = "//button[contains(@class, 'artdeco-button') and .//span[text()='Follow']]"
+            # Step 2: Locate "Follow" button dynamically by text
+            follow_button_xpath = "(//span[@class='artdeco-button__text'][normalize-space()='Follow'])[2]"
 
-#             try:
-#                 follow_button = None
+            try:
+                follow_button = None
 
-#                 # Try multiple scroll attempts until button appears
-#                 for i in range(3):  # max 3 scrolls
-#                     try:
-#                         follow_button = wait.until(
-#                             EC.visibility_of_element_located((By.XPATH, follow_button_xpath))
-#                         )
-#                         if follow_button:
-#                             break
-#                     except:
-#                         driver.execute_script("window.scrollBy(0, 500);")  # scroll down
-#                         time.sleep(5)
+                # Try multiple scroll attempts until button appears
+                for i in range(3):  # max 3 scrolls
+                    try:
+                        follow_button = wait.until(
+                            EC.visibility_of_element_located((By.XPATH, follow_button_xpath))
+                        )
+                        if follow_button:
+                            break
+                    except:
+                        driver.execute_script("window.scrollBy(0, 150);")  # scroll down
+                        time.sleep(5)
 
-#                 if follow_button:
-#                     # Scroll to the Follow button
-#                     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", follow_button)
-#                     time.sleep(1)
+                if follow_button:
+                    # Scroll to the Follow button
+                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", follow_button)
+                    time.sleep(1)
 
-#                     # Wait until clickable
-#                     wait.until(EC.element_to_be_clickable((By.XPATH, follow_button_xpath)))
+                    # Wait until clickable
+                    wait.until(EC.element_to_be_clickable((By.XPATH, follow_button_xpath)))
 
-#                     button_text = follow_button.text.strip()
-#                     if button_text == "Follow":
-#                         ActionChains(driver).move_to_element(follow_button).click(follow_button).perform()
-#                         print(f"✅ Successfully followed: {linkedin_url}")
-#                         time.sleep(5)
-#                     else:
-#                         print(f"⚠️ Already following: {linkedin_url}")
-#                 else:
-#                     print(f"❌ Follow button not found even after scrolling: {linkedin_url}")
+                    button_text = follow_button.text.strip()
+                    if button_text == "Follow":
+                        ActionChains(driver).move_to_element(follow_button).click(follow_button).perform()
+                        print(f"✅ Successfully followed: {linkedin_url}")
+                        time.sleep(5)
+                    else:
+                        print(f"⚠️ Already following: {linkedin_url}")
+                else:
+                    print(f"❌ Follow button not found even after scrolling: {linkedin_url}")
 
-#             except Exception as e:
-#                 print(f"❌ No Follow button for: {linkedin_url} ({e})")
+            except Exception as e:
+                print(f"❌ No Follow button for: {linkedin_url} ({e})")
 
-#         except Exception as e:
-#             print(f"❌ Error opening profile {linkedin_url}: {e}")
+        except Exception as e:
+            print(f"❌ Error opening profile {linkedin_url}: {e}")
 
-# # -----------------------------
-# # 3️⃣ Close browser
-# # -----------------------------
-# time.sleep(10)  # Keep open for review
-# driver.quit()
+# -----------------------------
+# 3️⃣ Close browser
+# -----------------------------
+time.sleep(10)  # Keep open for review
+driver.quit()
 
 
 #send without note direct code from inside more and then click on the connect and send request without notes
@@ -418,7 +418,7 @@
 # time.sleep(5)
 # driver.quit()
 
-# this is with note add  that person and related personalized msg given 
+#this is with note add  that person and related personalized msg given 
 import time
 import csv
 from selenium import webdriver
