@@ -8,11 +8,7 @@ import pandas as pd
 # -----------------------------
 # Initialize Gemini Model
 # -----------------------------
-gemini = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash-lite",
-    google_api_key="AIzaSyAfF0US-6dhORnzwUfEgRfZu0CaaefAiH4",  # 🔹 Replace with your actual Google API Key
-    temperature=0.8
-)
+
 details ={
     "chaherla ekdum nahi chahye jese dil mki tabbat i si chahera ek khab bhi chahera e fool bhi "
     "this is being so called andthe details are showing the things "
