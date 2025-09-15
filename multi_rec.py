@@ -13,18 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import argparse
 
-#  Gemini (LangChain) imports
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.schema import HumanMessage, SystemMessage
 
-
-# Initialize Gemini Model
-
-gemini = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash-lite",
-    google_api_key="AIzaSyAfF0US-6dhORnzwUfEgRfZu0CaaefAiH4",  # 🔹 Replace with your actual Google API Key
-    temperature=0.8
-)
 
 
 # Load accounts
