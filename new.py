@@ -294,8 +294,7 @@ driver.quit()
 # csv_file_path = r"C:/Users/X1/Downloads/one_data.csv"
 
 # # LinkedIn credentials
-# linkedin_email = "brijeshshah19@gmail.com"
-# linkedin_password = "NextGen@1"
+
 
 # # Chrome options
 # user_data_dir = r"C:\SeleniumProfile"
@@ -438,8 +437,6 @@ output_file = r"C:/Users/X1/Downloads/connection_results.csv"  # Output CSV
 # -----------------------------
 # LinkedIn Credentials
 # -----------------------------
-linkedin_email = "brijeshshah19@gmail.com"
-linkedin_password = "NextGen@1"
 
 # -----------------------------
 # Chrome Options
@@ -594,3 +591,5 @@ with open(output_file, mode='w', newline='', encoding='utf-8') as out:
 print(f"\n🎉 All done! Results saved into: {output_file}")
 time.sleep(3)
 driver.quit()
+
+#this details should show all the  about functionlaity
